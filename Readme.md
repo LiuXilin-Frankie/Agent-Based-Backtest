@@ -19,7 +19,7 @@ pip install PySide6
 How to run
 ```shell
 conda activate AgentBasedBacktest
-python3 rtg.py run autotrader.py
+python3.11 rtg.py run autotrader.py
 ```
 
 ### File Structure

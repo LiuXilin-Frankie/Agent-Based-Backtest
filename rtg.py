@@ -22,6 +22,7 @@ import subprocess
 import sys
 import time
 import traceback
+import os
 
 import ready_trader_go.exchange
 import ready_trader_go.trader
@@ -31,6 +32,10 @@ try:
 except ImportError:
     hud_main = hud_replay = None
 
+if os.path.exists('score_board.csv'): os.remove('score_board.csv')
+if os.path.exists('match_events.csv'): os.remove('match_events.csv')
+if os.path.exists('infomation_logger.log'): os.remove('infomation_logger.log')
+if os.path.exists('exchange.log'): os.remove('exchange.log')
 
 def no_heads_up_display() -> None:
     print("Cannot run the Ready Trader Go heads-up display. This could\n"
