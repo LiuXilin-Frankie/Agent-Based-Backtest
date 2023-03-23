@@ -55,7 +55,7 @@ class AutoTrader(BaseAutoTrader):
         self.asks = set()
         self.ask_id = self.ask_price = self.bid_id = self.bid_price = self.position = 0
 
-    def on_error_message(self, client_order_id: int, error_message: bytes) -> None:
+    def on_error_message(self, client_order_id: int, error_message: bytes):
         """Called when the exchange detects an error.
 
         If the error pertains to a particular order, then the client_order_id
@@ -65,7 +65,7 @@ class AutoTrader(BaseAutoTrader):
         if client_order_id != 0 and (client_order_id in self.bids or client_order_id in self.asks):
             self.on_order_status_message(client_order_id, 0, 0, 0)
 
-    def on_hedge_filled_message(self, client_order_id: int, price: int, volume: int) -> None:
+    def on_hedge_filled_message(self, client_order_id: int, price: int, volume: int):
         """Called when one of your hedge orders is filled.
 
         The price is the average price at which the order was (partially) filled,
@@ -76,7 +76,7 @@ class AutoTrader(BaseAutoTrader):
                          price, volume)
 
     def on_order_book_update_message(self, instrument: int, sequence_number: int, ask_prices: List[int],
-                                     ask_volumes: List[int], bid_prices: List[int], bid_volumes: List[int]) -> None:
+                                     ask_volumes: List[int], bid_prices: List[int], bid_volumes: List[int]):
         """Called periodically to report the status of an order book.
 
         The sequence number can be used to detect missed or out-of-order
@@ -110,7 +110,7 @@ class AutoTrader(BaseAutoTrader):
                 self.send_insert_order(self.ask_id, Side.SELL, new_ask_price, LOT_SIZE, Lifespan.GOOD_FOR_DAY)
                 self.asks.add(self.ask_id)
 
-    def on_order_filled_message(self, client_order_id: int, price: int, volume: int) -> None:
+    def on_order_filled_message(self, client_order_id: int, price: int, volume: int):
         """Called when one of your orders is filled, partially or fully.
 
         The price is the price at which the order was (partially) filled,
@@ -127,7 +127,7 @@ class AutoTrader(BaseAutoTrader):
             self.send_hedge_order(next(self.order_ids), Side.BID, MAX_ASK_NEAREST_TICK, volume)
 
     def on_order_status_message(self, client_order_id: int, fill_volume: int, remaining_volume: int,
-                                fees: int) -> None:
+                                fees: int):
         """Called when the status of one of your orders changes.
 
         The fill_volume is the number of lots already traded, remaining_volume
@@ -150,7 +150,7 @@ class AutoTrader(BaseAutoTrader):
             self.asks.discard(client_order_id)
 
     def on_trade_ticks_message(self, instrument: int, sequence_number: int, ask_prices: List[int],
-                               ask_volumes: List[int], bid_prices: List[int], bid_volumes: List[int]) -> None:
+                               ask_volumes: List[int], bid_prices: List[int], bid_volumes: List[int]):
         """Called periodically when there is trading activity on the market.
 
         The five best ask (i.e. sell) and bid (i.e. buy) prices at which there

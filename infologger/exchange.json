@@ -1,6 +1,6 @@
 {
   "Engine": {
-    "MarketDataFile": "data/match488_events.csv",
+    "MarketDataFile": "data/match488_competitor_orders.csv",
     "MarketEventInterval": 0.05,
     "MarketOpenDelay": 5.0,
     "MatchEventsFile": "match_events.csv",
