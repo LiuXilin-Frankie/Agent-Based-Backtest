@@ -1,7 +1,8 @@
+# ignore self-defined
+.DS_store
+
 
 # ignore large files
-
-
 
 meetings/
 

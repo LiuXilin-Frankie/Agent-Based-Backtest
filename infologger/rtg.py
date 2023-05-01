@@ -32,19 +32,27 @@ try:
 except ImportError:
     hud_main = hud_replay = None
 
+"""
+删除之前的中间数据，避免中间数据出现堆叠
+"""
 if os.path.exists('score_board.csv'): os.remove('score_board.csv')
 if os.path.exists('match_events.csv'): os.remove('match_events.csv')
 if os.path.exists('infomation_logger.log'): os.remove('infomation_logger.log')
 if os.path.exists('exchange.log'): os.remove('exchange.log')
 
 
-def no_heads_up_display() -> None:
+def no_heads_up_display(): # -> None
+    """
+    如果可视化窗口Pyside6调用失败则print
+    但是在可视化失败的情况下，仍然可以正常输出结果数据
+    但replay调用会失败
+    """
     print("Cannot run the Ready Trader Go heads-up display. This could\n"
           "mean that the PySide6 module has not been installed. Please\n"
           "see the README.md file for more information.", file=sys.stderr)
 
 
-def replay(args) -> None:
+def replay(args):# -> None
     """Replay a match from a file."""
     if hud_replay is None:
         no_heads_up_display()
@@ -58,12 +66,15 @@ def replay(args) -> None:
     hud_replay(path)
 
 
-def on_error(name: str, error: Exception) -> None:
+def on_error(name: str, error: Exception):# -> None
+    """
+    打印系统核心线程的代码错误信息
+    """
     print("%s threw an exception: %s" % (name, error), file=sys.stderr)
     traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
 
 
-def run(args) -> None:
+def run(args):# -> None
     """Run a match."""
     for auto_trader in args.autotrader:
         if auto_trader.suffix.lower == ".py" and auto_trader.parent != pathlib.Path("."):
@@ -99,7 +110,7 @@ def run(args) -> None:
             hud_main(args.host, args.port)
 
 
-def main() -> None:
+def main():  # ->None
     """Process command line arguments and execute the given command."""
     parser = argparse.ArgumentParser(description="Ready Trader Go command line utility.")
     subparsers = parser.add_subparsers(title="command")

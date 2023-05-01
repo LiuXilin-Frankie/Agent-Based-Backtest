@@ -15,6 +15,10 @@
 #     You should have received a copy of the GNU Affero General Public
 #     License along with Ready Trader Go.  If not, see
 #     <https://www.gnu.org/licenses/>.
+"""
+文件用来执行 rtg.py 中发出的指令
+指令分为run和replay。
+"""
 import configparser
 import json
 import os
@@ -39,6 +43,9 @@ EXCHANGE_CONFIG_PATH = "exchange.json"
 
 
 def __create_application() -> QtWidgets.QApplication:
+    """
+    用来创立交互界面
+    """
     app = QtWidgets.QApplication(sys.argv)
     app.setStyle(QtWidgets.QStyleFactory.create("Fusion"))
     with (HERE.joinpath("style/style.qss")).open("r") as theme:
@@ -62,6 +69,7 @@ def __read_exchange_config() -> Tuple[float, float]:
 
 
 def __show_splash() -> QtWidgets.QSplashScreen:
+    """展示系统开始界面"""
     splash = QtWidgets.QSplashScreen(QtGui.QPixmap(str(HERE.joinpath("images/splash.png"))))
     splash.show()
     return splash
