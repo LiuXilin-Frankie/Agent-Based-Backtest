@@ -1,5 +1,6 @@
 # ignore self-defined
 .DS_store
+*.zip
 
 
 # ignore large files
