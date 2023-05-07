@@ -313,7 +313,11 @@ class OrderBook(object):
 
     def trade_ticks(self, ask_prices: List[int], ask_volumes: List[int], bid_prices: List[int],
                     bid_volumes: List[int]) -> bool:
-        """Return True and populate the lists if there have been trades."""
+        """
+        Return True and populate the lists if there have been trades.
+        如果最优的 TOP_LEVEL_COUNT 档存在订单则返回True并清空 self.__ask_ticks 和 self.__bid_ticks
+        如果没有则返回False
+        """
         if self.__ask_ticks or self.__bid_ticks:
             prices = sorted(self.__ask_ticks.keys())[:TOP_LEVEL_COUNT]
             volumes = tuple(self.__ask_ticks[p] for p in prices)
@@ -333,8 +337,10 @@ class OrderBook(object):
         return False
 
     def try_trade(self, side: Side, limit_price: int, volume: int) -> Tuple[int, int]:
-        """Return the volume that would trade and the average price per lot for
+        """
+        Return the volume that would trade and the average price per lot for
         the requested trade without changing the order book.
+        在不更改订单簿的情况下返回所请求交易的交易量和每手平均价格。
         """
         total_volume: int = 0
         total_value: int = 0
