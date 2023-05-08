@@ -30,6 +30,7 @@ class Side(enum.IntEnum):
     BID = BUY
     A = SELL
     B = BUY
+    S = SELL
 
 
 class Lifespan(enum.IntEnum):
